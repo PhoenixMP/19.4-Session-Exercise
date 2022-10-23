@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Survey{% endblock %}
+{% block content %}
+
+{% with messages=get_flashed_messages()%}
+{% if messages %}
+
+{% for message in messages %}
+<p class="flashes">{{message}}
+<p>
+    {% endfor %}
+
+    {% endif %}
+    {% endwith %}
+
+
+<h1>{{title}}</h1>
+
+<form action="/questions/answer" method="POST">
+    <p>{{question.question}}</p>
+    {% if question.choices%}
+    {% for choice in question.choices %}
+    <input type="radio" id="{{choice}}" name="choice" value="{{choice}}">
+    <label for="{{choice}}">{{choice}}</label>
+
+    {% endfor %}
+    {% else %}
+    <input type="radio" id="yes" name="choice" value="yes">
+    <label for="yes">Yes</label>
+    <input type="radio" id="no" name="choice" value="no">
+    <label for="no">No</label>
+    {% endif %}
+    <button>Submit Answer</button>
+</form>
+
+{% endblock %}
